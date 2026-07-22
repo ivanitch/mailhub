@@ -1,0 +1,11 @@
+__pycache__/
+.poetry/
+.venv/
+.idea/
+
+.coverage
+.coverage.*
+*.cover
+/htmlcov/
+
+/.env

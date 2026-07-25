@@ -5,7 +5,7 @@
 {% block content %}
 <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-semibold">Получатели рассылки</h1>
-    <a href="#"
+    <a href="{% url 'clients:client_create' %}"
        class="rounded-lg bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:bg-sky-700">
         + Добавить клиента
     </a>
@@ -26,15 +26,15 @@
             {% for client in clients %}
             <tr class="hover:bg-slate-50">
                 <td class="px-4 py-3">
-                    <a href="#" class="text-sky-600 hover:underline">
+                    <a href="{% url 'clients:client_detail' client.pk %}" class="text-sky-600 hover:underline">
                         {{ client.full_name }}
                     </a>
                 </td>
                 <td class="px-4 py-3">{{ client.email }}</td>
                 <td class="px-4 py-3 text-slate-500">{{ client.comment|truncatechars:60 }}</td>
                 <td class="px-4 py-3 text-right space-x-3">
-                    <a href="#" class="text-slate-600 hover:text-sky-600">Изменить</a>
-                    <a href="#" class="text-red-500 hover:text-red-700">Удалить</a>
+                    <a href="{% url 'clients:client_update' client.pk %}" class="text-slate-600 hover:text-sky-600">Изменить</a>
+                    <a href="{% url 'clients:client_delete' client.pk %}" class="text-red-500 hover:text-red-700">Удалить</a>
                 </td>
             </tr>
             {% endfor %}
@@ -56,7 +56,7 @@
 
 {% else %}
 <div class="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
-    Пока нет ни одного получателя. <a href="#" class="text-sky-600 hover:underline">Добавьте первого</a>.
+    Пока нет ни одного получателя. <a href="{% url 'clients:client_create' %}" class="text-sky-600 hover:underline">Добавьте первого</a>.
 </div>
 {% endif %}
 {% endblock %}

@@ -1,26 +1,34 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-    <title>Django Tailwind</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}MailHub{% endblock %}</title>
     {% tailwind_css %}
 </head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
 
-<body class="bg-gray-50 text-black font-serif leading-normal tracking-normal">
+{% include "common/header.html" %}
 
-    <div class="toast toast-top toast-end">
-        <div class="alert alert-info">
-            <span>Hello from daisyUi 👋</span>
+<main class="container mx-auto px-4 py-8 flex-1 w-full">
+    {% if messages %}
+        <div class="mb-6 space-y-2">
+            {% for message in messages %}
+                <div class="rounded-lg px-4 py-3 text-sm
+                    {% if message.tags == 'error' %}bg-red-100 text-red-800
+                    {% elif message.tags == 'success' %}bg-green-100 text-green-800
+                    {% else %}bg-sky-100 text-sky-800{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         </div>
-    </div>
+    {% endif %}
 
-<div class="container mx-auto">
-    <section class="flex items-center justify-center h-screen">
-        <h1 class="text-5xl">Django + Tailwind = ❤️</h1>
-    </section>
-</div>
+    {% block content %}{% endblock %}
+</main>
+
+{% include "common/footer.html" %}
+
 </body>
 </html>

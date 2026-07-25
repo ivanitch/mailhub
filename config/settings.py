@@ -123,3 +123,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 APP_NAME = 'MailHub'
+
+SESSION_COOKIE_NAME = 'mailhub_sessionid'

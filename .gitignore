@@ -1,11 +1,81 @@
+# ========================
+# Python
+# ========================
 __pycache__/
-.poetry/
-.venv/
-.idea/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.Python
 
+# ========================
+# Django
+# staticfiles/ - это результат collectstatic — не путать с исходной папкой static/
+# ========================
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+*.pot
+*.mo
+
+# ========================
+# Виртуальные окружения
+# Пример для `env`: .env.dist, .env.example
+# ========================
+.env
+.env.local
+.env.*.local
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Poetry / Pipenv — lock-файлы НЕ игнорируем (poetry.lock, Pipfile.lock коммитятся)
+
+# ========================
+# IDE
+# ========================
+.idea/
+*.iml
+*.iws
+out/
+.vscode/
+*.swp
+*.swo
+
+# ========================
+# Тесты и покрытие
+# ========================
+.tox/
 .coverage
 .coverage.*
 *.cover
-/htmlcov/
+htmlcov/
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
 
-/.env
+# ========================
+# Celery
+# ========================
+celerybeat-schedule
+celerybeat.pid
+
+# ========================
+# Системные файлы (Mac/Windows)
+# ========================
+.DS_Store
+Thumbs.db
+ehthumbs.db

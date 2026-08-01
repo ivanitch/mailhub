@@ -6,7 +6,19 @@
             <a href="{% url 'clients:client_list' %}" class="hover:text-sky-400">Клиенты</a>
             <a href="{% url 'messages_app:message_list' %}" class="hover:text-sky-400">Сообщения</a>
             <a href="{% url 'mailings:mailing_list' %}" class="hover:text-sky-400">Рассылки</a>
-            <a href="{% url 'admin:index' %}" class="hover:text-sky-400">Админка</a>
+            {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}" class="hover:text-sky-400">Админка</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <span class="text-slate-400">{{ user.username }}</span>
+                <form method="post" action="{% url 'users:logout' %}" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="hover:text-sky-400">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'users:login' %}" class="hover:text-sky-400">Войти</a>
+                <a href="{% url 'users:register' %}" class="hover:text-sky-400">Регистрация</a>
+            {% endif %}
         </div>
     </nav>
 </header>

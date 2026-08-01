@@ -31,8 +31,6 @@ class ClientCreateView(SuccessMessageMixin, CreateView):
     form_class = ClientForm
     template_name = 'clients/client_form.html'
     success_url = reverse_lazy('clients:client_list')
-
-    # %(full_name)s подставит атрибут full_name созданного объекта
     success_message = 'Получатель "%(full_name)s" успешно добавлен.'
 
     def form_valid(self, form):
@@ -48,8 +46,6 @@ class ClientUpdateView(SuccessMessageMixin, UpdateView):
     form_class = ClientForm
     template_name = 'clients/client_form.html'
     success_url = reverse_lazy('clients:client_list')
-
-    # Автоматически подставляет full_name из обновленной модели
     success_message = 'Данные получателя "%(full_name)s" обновлены.'
 
 
@@ -61,6 +57,5 @@ class ClientDeleteView(DeleteView):
     success_url = reverse_lazy('clients:client_list')
 
     def form_valid(self, form):
-        # Передаем имя перед удалением, пока объект self.object еще доступен
         messages.success(self.request, f'Получатель "{self.object.full_name}" был успешно удалён.')
         return super().form_valid(form)

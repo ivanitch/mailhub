@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "clients.apps.ClientsConfig",
     "messages_app.apps.MessagesAppConfig",
     "mailings.apps.MailingsConfig",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [

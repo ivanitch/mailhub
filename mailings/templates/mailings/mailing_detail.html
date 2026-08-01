@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}{{ mailing.message.subject }} — MailHub{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl">
+    <a href="{% url 'mailings:mailing_list' %}" class="text-sm text-sky-600 hover:underline">&larr; К списку рассылок</a>
+
+    <div class="mt-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="flex items-start justify-between">
+            <div>
+                <h1 class="text-2xl font-semibold mb-1">{{ mailing.message.subject }}</h1>
+                <span class="inline-block rounded-full px-2 py-0.5 text-xs font-medium
+                    {% if mailing.status == 'started' %}bg-green-100 text-green-700
+                    {% elif mailing.status == 'finished' %}bg-slate-200 text-slate-600
+                    {% else %}bg-amber-100 text-amber-700{% endif %}">
+                    {{ mailing.get_status_display }}
+                </span>
+                {% if mailing.is_disabled %}
+                    <span class="inline-block rounded-full px-2 py-0.5 text-xs font-medium bg-red-100 text-red-700 ml-1">Отключена</span>
+                {% endif %}
+            </div>
+            <form method="post" action="{% url 'mailings:mailing_send' mailing.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="rounded-lg bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:bg-sky-700">
+                    Отправить сейчас
+                </button>
+            </form>
+        </div>
+
+        <dl class="grid sm:grid-cols-2 gap-4 mt-6 text-sm">
+            <div>
+                <dt class="text-slate-500">Начало отправки</dt>
+                <dd>{{ mailing.start_time|date:"d.m.Y H:i" }}</dd>
+            </div>
+            <div>
+                <dt class="text-slate-500">Окончание отправки</dt>
+                <dd>{{ mailing.end_time|date:"d.m.Y H:i" }}</dd>
+            </div>
+            <div>
+                <dt class="text-slate-500">Получателей</dt>
+                <dd>{{ mailing.recipients.count }}</dd>
+            </div>
+            <div>
+                <dt class="text-slate-500">Текст письма</dt>
+                <dd class="whitespace-pre-line">{{ mailing.message.body|truncatechars:200 }}</dd>
+            </div>
+        </dl>
+
+        <div class="mt-6 flex gap-3">
+            <a href="{% url 'mailings:mailing_update' mailing.pk %}"
+               class="rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium hover:bg-slate-200">Изменить</a>
+            <a href="{% url 'mailings:mailing_delete' mailing.pk %}"
+               class="rounded-lg bg-red-50 text-red-600 px-4 py-2 text-sm font-medium hover:bg-red-100">Удалить</a>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <h2 class="text-lg font-semibold mb-3">История попыток отправки</h2>
+        {% if attempts %}
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+            <table class="min-w-full text-sm">
+                <thead class="bg-slate-100 text-slate-600 text-left">
+                    <tr>
+                        <th class="px-4 py-2">Дата и время</th>
+                        <th class="px-4 py-2">Получатель</th>
+                        <th class="px-4 py-2">Статус</th>
+                        <th class="px-4 py-2">Ответ сервера</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for attempt in attempts %}
+                    <tr>
+                        <td class="px-4 py-2">{{ attempt.attempt_time|date:"d.m.Y H:i:s" }}</td>
+                        <td class="px-4 py-2">{{ attempt.recipient.email|default:"—" }}</td>
+                        <td class="px-4 py-2">
+                            <span class="{% if attempt.status == 'success' %}text-green-700{% else %}text-red-600{% endif %}">
+                                {{ attempt.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-2 text-slate-500">{{ attempt.server_response|truncatechars:60 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-slate-500">Попыток отправки пока не было.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

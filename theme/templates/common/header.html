@@ -5,8 +5,8 @@
             <a href="{% url 'main:home' %}" class="hover:text-sky-400">Главная</a>
             <a href="{% url 'clients:client_list' %}" class="hover:text-sky-400">Клиенты</a>
             <a href="{% url 'messages_app:message_list' %}" class="hover:text-sky-400">Сообщения</a>
-            <a href="#" class="hover:text-sky-400">Рассылки</a>
-            <a href="#" class="hover:text-sky-400">Админка</a>
+            <a href="{% url 'mailings:mailing_list' %}" class="hover:text-sky-400">Рассылки</a>
+            <a href="{% url 'admin:index' %}" class="hover:text-sky-400">Админка</a>
         </div>
     </nav>
 </header>

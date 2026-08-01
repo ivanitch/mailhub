@@ -1,24 +1,42 @@
 {% extends "base.html" %}
 
-{% block title %}MailHub — главная{% endblock %}
+{% block title %}{{ APP_NAME }}{% endblock %}
 
 {% block content %}
-<h1 class="text-2xl font-semibold mb-6">Обзор</h1>
-
-<div class="grid gap-4 sm:grid-cols-3">
+    <div class="mb-[30px] flex gap-3">
+        <a href="#" class="rounded-sm bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:bg-sky-700">
+            + Новая рассылка
+        </a>
+        <a href="{% url 'clients:client_create' %}"
+           class="rounded-sm bg-slate-100 px-4 py-2 text-sm font-medium hover:bg-slate-200">
+            + Новый клиент
+        </a>
     </div>
-    <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        <p class="text-sm text-slate-500 mb-1">Уникальных получателей</p>
-        <p class="text-3xl font-semibold">{{ unique_recipients }}</p>
-    </div>
-</div>
 
-<div class="mt-8 flex gap-3">
-    <a href="#" class="rounded-lg bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:bg-sky-700">
-        + Новая рассылка
-    </a>
-    <a href="{% url 'clients:client_create' %}" class="rounded-lg bg-slate-100 px-4 py-2 text-sm font-medium hover:bg-slate-200">
-        + Новый клиент
-    </a>
-</div>
+    <div class="grid gap-4 sm:grid-cols-3">
+        <div class="rounded-sm border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500 mb-1">Всего рассылок</p>
+            <p class="text-3xl font-semibold">{{ total_mailings }}</p>
+        </div>
+        <div class="rounded-sm border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500 mb-1">Активных рассылок</p>
+            <p class="text-3xl font-semibold text-sky-600">{{ active_mailings }}</p>
+        </div>
+        <div class="rounded-sm border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500 mb-1">Уникальных получателей</p>
+            <p class="text-3xl font-semibold">{{ unique_recipients }}</p>
+        </div>
+        <div class="rounded-sm border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500 mb-1">Всего сообщений</p>
+            <p class="text-3xl font-semibold">{{ total_messages }}</p>
+        </div>
+        <div class="rounded-sm border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500 mb-1">Успешных попыток отправки</p>
+            <p class="text-3xl font-semibold text-green-600">{{ successful_attempts }}</p>
+        </div>
+        <div class="rounded-sm border border-slate-200 bg-white p-6 shadow-sm">
+            <p class="text-sm text-slate-500 mb-1">Неуспешных попыток отправки</p>
+            <p class="text-3xl font-semibold text-red-600">{{ failed_attempts }}</p>
+        </div>
+    </div>
 {% endblock %}

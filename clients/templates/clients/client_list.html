@@ -6,13 +6,13 @@
 <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-semibold">Получатели рассылки</h1>
     <a href="{% url 'clients:client_create' %}"
-       class="rounded-lg bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:bg-sky-700">
+       class="rounded-sm bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:bg-sky-700">
         + Добавить клиента
     </a>
 </div>
 
 {% if clients %}
-<div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+<div class="overflow-x-auto rounded-sm border border-slate-200 bg-white shadow-sm">
     <table class="min-w-full text-sm">
         <thead class="bg-slate-100 text-slate-600 text-left">
             <tr>

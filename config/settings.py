@@ -36,7 +36,10 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     "main.apps.MainConfig",
-    "clients",
+    "clients.apps.ClientsConfig",
+    "messages_app.apps.MessagesAppConfig",
+    "mailings.apps.MailingsConfig",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -125,3 +128,23 @@ MEDIA_ROOT = BASE_DIR / 'media'
 APP_NAME = 'MailHub'
 
 SESSION_COOKIE_NAME = 'mailhub_sessionid'
+
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': os.getenv('REDIS_LOCATION'),
+    }
+}
+CACHE_ENABLED = os.getenv('CACHE_ENABLED', 'False') == 'True'
+CACHE_TTL = int(os.getenv('CACHE_TTL', 60))
+

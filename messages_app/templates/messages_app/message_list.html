@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Сообщения — MailHub{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold">Сообщения</h1>
+    <a href="{% url 'messages_app:message_create' %}"
+       class="rounded-lg bg-sky-600 text-white px-4 py-2 text-sm font-medium hover:bg-sky-700">
+        + Новое сообщение
+    </a>
+</div>
+
+{% if messages_list %}
+<div class="grid gap-4 sm:grid-cols-2">
+    {% for msg in messages_list %}
+    <a href="{% url 'messages_app:message_detail' msg.pk %}"
+       class="block rounded-xl border border-slate-200 bg-white p-5 shadow-sm hover:border-sky-300 hover:shadow">
+        <h2 class="font-medium text-slate-900 mb-1">{{ msg.subject }}</h2>
+        <p class="text-sm text-slate-500 line-clamp-3">{{ msg.body|truncatechars:120 }}</p>
+        <p class="text-xs text-slate-400 mt-3">{{ msg.created_at }}</p>
+    </a>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+<div class="mt-6 flex gap-3 text-sm">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="text-sky-600 hover:underline">&larr; Назад</a>
+    {% endif %}
+    <span class="text-slate-500">Стр. {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="text-sky-600 hover:underline">Вперёд &rarr;</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
+    Пока нет ни одного сообщения. <a href="{% url 'messages_app:message_create' %}" class="text-sky-600 hover:underline">Создайте первое</a>.
+</div>
+{% endif %}
+{% endblock %}

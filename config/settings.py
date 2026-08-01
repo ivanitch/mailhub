@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     "tailwind",
     "theme",
     "main.apps.MainConfig",
-    "clients",
+    "clients.apps.ClientsConfig",
+    "messages_app.apps.MessagesAppConfig",
 ]
 
 MIDDLEWARE = [

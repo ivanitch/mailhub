@@ -9,3 +9,112 @@
   * the scope of this path.
   */
 @source "../../../**/*.{html,py,js}";
+
+/* Custom Toast Alerts */
+.toast-alert {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.15s ease-in-out;
+}
+
+.toast-alert-content {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+}
+
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.toast-title {
+    font-weight: 600;
+    margin-bottom: 0.125rem;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+
+.toast-close:hover {
+    opacity: 1;
+}
+
+/* Модификаторы статусов */
+
+/* Success (Зеленый) */
+.toast-success {
+    background-color: #065f46;
+    border: 1px solid #064e3b;
+    color: #ecfdf5;
+}
+.toast-success .toast-icon {
+    background-color: #047857;
+    color: #34d399;
+}
+.toast-success .toast-title {
+    color: #a7f3d0;
+}
+
+/* Error (Красный) */
+.toast-error {
+    background-color: #4c0519;
+    border: 1px solid #831843;
+    color: #fff1f2;
+}
+.toast-error .toast-icon {
+    background-color: #9f1239;
+    color: #fecdd3;
+}
+.toast-error .toast-title {
+    color: #fecdd3;
+}
+
+/* Warning (Желтый/Янтарный) */
+.toast-warning {
+    background-color: #451a03;
+    border: 1px solid #78350f;
+    color: #fffbeb;
+}
+.toast-warning .toast-icon {
+    background-color: #b45309;
+    color: #fde68a;
+}
+.toast-warning .toast-title {
+    color: #fde68a;
+}
+
+/* Info (Синий) */
+.toast-info {
+    background-color: #0c4a6e;
+    border: 1px solid #075985;
+    color: #f0f9ff;
+}
+.toast-info .toast-icon {
+    background-color: #0284c7;
+    color: #38bdf8;
+}
+.toast-info .toast-title {
+    color: #bae6fd;
+}

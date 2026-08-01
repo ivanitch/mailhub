@@ -1,10 +1,10 @@
-{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}MailHub{% endblock %}</title>
+    {% load static tailwind_tags %}
     {% tailwind_css %}
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
@@ -12,18 +12,7 @@
 {% include "common/header.html" %}
 
 <main class="container mx-auto px-4 py-8 flex-1 w-full">
-    {% if messages %}
-        <div class="mb-6 space-y-2">
-            {% for message in messages %}
-                <div class="rounded-lg px-4 py-3 text-sm
-                    {% if message.tags == 'error' %}bg-red-100 text-red-800
-                    {% elif message.tags == 'success' %}bg-green-100 text-green-800
-                    {% else %}bg-sky-100 text-sky-800{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+    {% include "common/messages.html" %}
 
     {% block content %}{% endblock %}
 </main>

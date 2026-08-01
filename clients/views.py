@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
@@ -23,7 +24,7 @@ class ClientDetailView(DetailView):
     context_object_name = 'client'
 
 
-class ClientCreateView(CreateView):
+class ClientCreateView(SuccessMessageMixin, CreateView):
     """Добавление нового получателя рассылки."""
 
     model = Client
@@ -31,14 +32,16 @@ class ClientCreateView(CreateView):
     template_name = 'clients/client_form.html'
     success_url = reverse_lazy('clients:client_list')
 
+    # %(full_name)s подставит атрибут full_name созданного объекта
+    success_message = 'Получатель "%(full_name)s" успешно добавлен.'
+
     def form_valid(self, form):
         if self.request.user.is_authenticated:
             form.instance.owner = self.request.user
-        messages.success(self.request, 'Получатель рассылки успешно добавлен.')
         return super().form_valid(form)
 
 
-class ClientUpdateView(UpdateView):
+class ClientUpdateView(SuccessMessageMixin, UpdateView):
     """Редактирование получателя рассылки."""
 
     model = Client
@@ -46,9 +49,8 @@ class ClientUpdateView(UpdateView):
     template_name = 'clients/client_form.html'
     success_url = reverse_lazy('clients:client_list')
 
-    def form_valid(self, form):
-        messages.success(self.request, 'Данные получателя обновлены.')
-        return super().form_valid(form)
+    # Автоматически подставляет full_name из обновленной модели
+    success_message = 'Данные получателя "%(full_name)s" обновлены.'
 
 
 class ClientDeleteView(DeleteView):
@@ -59,5 +61,6 @@ class ClientDeleteView(DeleteView):
     success_url = reverse_lazy('clients:client_list')
 
     def form_valid(self, form):
-        messages.success(self.request, 'Получатель рассылки удалён.')
+        # Передаем имя перед удалением, пока объект self.object еще доступен
+        messages.success(self.request, f'Получатель "{self.object.full_name}" был успешно удалён.')
         return super().form_valid(form)

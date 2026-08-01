@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Client(models.Model):
@@ -29,6 +30,9 @@ class Client(models.Model):
     )
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+
+    def get_absolute_url(self):
+        return reverse('clients:client_detail', kwargs={'pk': self.pk})
 
     class Meta:
         verbose_name = 'Получатель рассылки'

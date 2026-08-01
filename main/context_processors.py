@@ -3,5 +3,6 @@ from django.conf import settings
 
 def app_settings(request):
     return {
-        'APP_NAME': getattr(settings, 'APP_NAME', 'MyProject')
+        'APP_NAME': getattr(settings, 'APP_NAME', 'MyProject'),
+        'is_manager': is_manager(getattr(request, 'user', None)),
     }

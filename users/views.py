@@ -76,3 +76,37 @@ class ConfirmEmailView(View):
 
         messages.error(request, 'Ссылка подтверждения недействительна или уже была использована.')
         return redirect('users:login')
+
+
+class UserListView(ManagerRequiredMixin, ListView):
+    """Список пользователей сервиса — доступен только менеджерам."""
+
+    model = User
+    template_name = 'users/user_list.html'
+    context_object_name = 'users_list'
+    paginate_by = 30
+
+    def get_queryset(self):
+        return User.objects.all().order_by('username')
+
+
+class ToggleUserActiveView(ManagerRequiredMixin, View):
+    """Блокировка/разблокировка пользователя сервиса — только для менеджеров.
+    Менеджер не может заблокировать сам себя или суперпользователя."""
+
+    def post(self, request, pk):
+        target = get_object_or_404(User, pk=pk)
+
+        if target.pk == request.user.pk:
+            messages.error(request, 'Нельзя заблокировать самого себя.')
+        elif target.is_superuser:
+            messages.error(request, 'Нельзя заблокировать суперпользователя.')
+        else:
+            target.is_active = not target.is_active
+            target.save(update_fields=['is_active'])
+            if target.is_active:
+                messages.success(request, f'Пользователь «{target.username}» разблокирован.')
+            else:
+                messages.success(request, f'Пользователь «{target.username}» заблокирован.')
+
+        return redirect('users:user_list')

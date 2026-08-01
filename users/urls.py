@@ -11,6 +11,9 @@ urlpatterns = [
     path('register/pending/', views.RegistrationPendingView.as_view(), name='registration_pending'),
     path('confirm-email/<uidb64>/<token>/', views.ConfirmEmailView.as_view(), name='confirm_email'),
 
+    path('list/', views.UserListView.as_view(), name='user_list'),
+    path('<int:pk>/toggle-active/', views.ToggleUserActiveView.as_view(), name='toggle_active'),
+
     path('login/', auth_views.LoginView.as_view(
         template_name='registration/login.html',
         authentication_form=LoginForm,

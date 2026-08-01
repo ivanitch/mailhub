@@ -6,6 +6,9 @@ from django.core.mail import send_mail
 from django.utils import timezone
 
 from .models import Mailing, MailingAttempt
+from main.views import invalidate_home_stats_cache
+
+invalidate_home_stats_cache()
 
 
 class MailingNotAllowedError(Exception):
